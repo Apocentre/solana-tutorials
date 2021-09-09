@@ -69,11 +69,11 @@ export const initEscrow = async (
     const signedTx = await provider.signTransaction(tx);
     console.log('Serialized: ', signedTx.serialize())
     
-    const signature = await connection.sendRawTransaction(
+    const txHash = await connection.sendRawTransaction(
       signedTx.serialize(),
       {skipPreflight: false, preflightCommitment: 'singleGossip'}
     );
-    console.log('Sent ', signature)
+    console.log('Sent ', txHash)
 
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
