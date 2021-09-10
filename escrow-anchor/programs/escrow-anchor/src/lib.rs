@@ -1,15 +1,11 @@
 use anchor_lang::prelude::*;
-use crate::accounts::*;
 
 declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
 
 #[program]
 pub mod escrow_anchor {
     use super::*;
-    pub fn initialize(ctx: Context<Initialize>) -> ProgramResult {
-        Ok(())
+    pub fn init_escrow(ctx: Context<instruction::InitEscrow>) -> ProgramResult {
+      Ok(())
     }
 }
-
-#[derive(Accounts)]
-pub struct Initialize {}
