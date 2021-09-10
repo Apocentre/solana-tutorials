@@ -15,7 +15,7 @@ const getProvider = () => {
 
 export const init = () => new Promise((resolve, reject) => {
   const provider = getProvider()
-  provider.connect({ onlyIfTrusted: true });
+  provider.connect();
   provider
     .on("connect", () => {
       console.log("connected!")

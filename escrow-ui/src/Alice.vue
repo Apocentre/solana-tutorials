@@ -3,10 +3,6 @@
     <p class="title">Escrow UI</p>
     <div>
       <div class="mb-1">
-          <label for="2020-12-24-programId-escrow-alice">Alice pubkey</label>
-          <input class="display-block" type="text" v-model="formState.privateKey">
-      </div>
-      <div class="mb-1">
           <label for="2020-12-24-programId-escrow-alice">Program id</label>
           <input class="display-block" type="text" id="2020-12-24-programId-escrow-alice" v-model="formState.programId">
       </div>
@@ -65,7 +61,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
-import { initEscrow } from "./util/initEscrow";
+import { initEscrow } from "./util/initEscrowAnchor";
 
 interface EscrowState {
     escrowAccountPubkey: null | string;
@@ -79,11 +75,10 @@ interface EscrowState {
 export default defineComponent({
   setup() {
     const formState = reactive({
-      privateKey: "Dcuqib7GUK8JZYxZNVHqojMxhdCauEp6znq3iKvmxPTn",
-      programId: "3rnUrR6zy27LDrig5XdMndxH63M2YzMrC4eu9XVii19T",
-      aliceXTokenAccountPubkey: "61nNRdkrs1SC84K4Ui7RYvqgqA7LJJTyzbRQTTNkfa1h",
-      aliceYTokenAccountPubkey: "5Qfhwz7Ed8s2jcN1MdMnjjtiagJhpFreknxczZ3ZAAEo",
-      amountXTokensToSendToEscrow: 100,
+      programId: "GAMHURm83SzwHkkdMZkYro4FUMj19SoNufVn2v4jXmJ1",
+      aliceXTokenAccountPubkey: "Eh8NcUvLbi7Kqj3RvqfLes5rm19AVDwbGbtCVcB29uop",
+      aliceYTokenAccountPubkey: "CJgwHYckhdqqwrKk4wEStMxisgTrF3bEQFQMDFErG6Q2",
+      amountXTokensToSendToEscrow: 200,
       amountYTokensAliceExpects: 50
     })
 
@@ -97,7 +92,6 @@ export default defineComponent({
     });
 
     const resetAliceUI = () => {
-      formState.privateKey = "";
       formState.programId = "";
       formState.aliceXTokenAccountPubkey = "";
       formState.aliceYTokenAccountPubkey = "";
@@ -116,7 +110,6 @@ export default defineComponent({
           initializerYTokenAccount,
           expectedAmount
         } = await initEscrow(
-          formState.privateKey,
           formState.aliceXTokenAccountPubkey,
           formState.amountXTokensToSendToEscrow,
           formState.aliceYTokenAccountPubkey,

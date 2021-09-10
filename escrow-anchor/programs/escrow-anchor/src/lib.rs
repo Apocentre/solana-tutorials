@@ -66,7 +66,7 @@ pub mod escrow_anchor {
 #[derive(Accounts)]
 pub struct InitEscrow<'info> {
   // 8 byte discriminator followed by 1 + 32 + 32 + 32 + 8
-  // check here https://docs.solana.com/developing/on-chain-programs/overview
+  // check here https://docs.solana.com/developing/onchain-programs/overview
   #[account(init, payer = initializer, space = 8 + 105)]
   pub escrow_account: Account<'info, Escrow>,
   #[account(signer)]
@@ -77,8 +77,8 @@ pub struct InitEscrow<'info> {
   pub rent: AccountInfo<'info>,
   pub token_program: AccountInfo<'info>,
 
-  // system_program, which is required by the runtime for creating the account
-  // #[account(address = system_program::ID)]
+  // system_program, which is required by the runtime for creating the escrow account
+  #[account(address = system_program::ID)]
   pub system_program: AccountInfo<'info>,
 }
 
@@ -96,7 +96,6 @@ impl IsInitialized for Escrow {
     self.is_initialized
   }
 }
-
 
 #[error]
 pub enum EscrowError {

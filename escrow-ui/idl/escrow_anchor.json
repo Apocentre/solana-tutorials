@@ -1,0 +1,107 @@
+{
+  "version": "0.0.0",
+  "name": "escrow_anchor",
+  "instructions": [
+    {
+      "name": "initEscrow",
+      "accounts": [
+        {
+          "name": "escrowAccount",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "initializer",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "tmpTokenAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenToReceiveAccount",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Escrow",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "isInitialized",
+            "type": "bool"
+          },
+          {
+            "name": "initializerPubkey",
+            "type": "publicKey"
+          },
+          {
+            "name": "tmpTokenAccountPubkey",
+            "type": "publicKey"
+          },
+          {
+            "name": "initializerTokenToReceiveAccountPubkey",
+            "type": "publicKey"
+          },
+          {
+            "name": "expectedAmount",
+            "type": "u64"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 300,
+      "name": "InvalidInstruction",
+      "msg": "Invalid Instruction"
+    },
+    {
+      "code": 301,
+      "name": "NotRentExempt",
+      "msg": "Not Rent Exempt"
+    },
+    {
+      "code": 302,
+      "name": "ExpectedAmountMismatch",
+      "msg": "Expected Amount Mismatch"
+    },
+    {
+      "code": 303,
+      "name": "AmountOverflow",
+      "msg": "Amount Overflow"
+    }
+  ],
+  "metadata": {
+    "address": "GAMHURm83SzwHkkdMZkYro4FUMj19SoNufVn2v4jXmJ1"
+  }
+}
