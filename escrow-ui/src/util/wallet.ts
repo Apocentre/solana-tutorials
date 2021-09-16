@@ -1,7 +1,4 @@
 /* eslint no-async-promise-executor: 0 */
-import { Connection, clusterApiUrl } from '@solana/web3.js';
-import Wallet from '@project-serum/sol-wallet-adapter'
-
 const getProvider = () => {
   if ("solana" in window) {
     const provider = (window as any).solana;

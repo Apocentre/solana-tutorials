@@ -6,7 +6,7 @@ use anchor_lang::solana_program::{
 };
 use anchor_spl::token;
 
-declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
+declare_id!("3kyu7viB2VYRVEm2B6xvZy2KvQAC7q9ZpbbzMGjnWJdo");
 
 #[program]
 pub mod escrow_anchor {
@@ -15,22 +15,11 @@ pub mod escrow_anchor {
   pub fn init_escrow(ctx: Context<InitEscrow>, amount: u64) -> ProgramResult {
     let accounts = ctx.accounts;
 
-    if !accounts.initializer.is_signer {
-      return Err(ProgramError::MissingRequiredSignature);
-    }
     if *accounts.token_to_receive_account.owner != token::ID {
       return Err(ProgramError::IncorrectProgramId);
     }
-    // If we had't and Alice were to pass in a non-rent-exempt account, the account balance might 
-    // go to zero before Bob takes the trade. With the account gone, Alice would have no way to 
-    // recover her tokens.
-    let rent  = &Rent::from_account_info(&accounts.rent)?;
-    let escrow_account = accounts.escrow_account.to_account_info();
-    if !rent.is_exempt(escrow_account.lamports(), escrow_account.data_len()) {
-      return Err(EscrowError::NotRentExempt.into());
-    }
 
-    let escrow_info = &mut accounts.escrow_account;
+    let escrow_info = &mut accounts.escrow;
     if escrow_info.is_initialized() {
       return Err(ProgramError::AccountAlreadyInitialized);
     }
@@ -68,13 +57,13 @@ pub struct InitEscrow<'info> {
   // 8 byte discriminator followed by 1 + 32 + 32 + 32 + 8
   // check here https://docs.solana.com/developing/onchain-programs/overview
   #[account(init, payer = initializer, space = 8 + 105)]
-  pub escrow_account: Account<'info, Escrow>,
+  pub escrow: Account<'info, Escrow>,
   #[account(mut)]
   pub initializer: Signer<'info>,
   #[account(mut)]
   pub tmp_token_account: AccountInfo<'info>,
   pub token_to_receive_account: AccountInfo<'info>,
-  pub rent: AccountInfo<'info>,
+  // pub rent: AccountInfo<'info>,
   pub token_program: AccountInfo<'info>,
 
   // system_program, which is required by the runtime for creating the escrow account

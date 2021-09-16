@@ -1,12 +1,11 @@
 import { AccountLayout, Token, TOKEN_PROGRAM_ID } from "@solana/spl-token";
-import BN from "bn.js";
 import { ESCROW_ACCOUNT_DATA_LAYOUT, EscrowLayout } from "./layout";
 import idl from "../../idl/escrow_anchor.json";
 
 import * as anchor from '@project-serum/anchor';
 import {init} from "./wallet";
 
-const {Account, SystemProgram, Keypair, Transaction, SYSVAR_RENT_PUBKEY, PublicKey, Connection} = anchor.web3
+const {Account, SystemProgram, Transaction, SYSVAR_RENT_PUBKEY, PublicKey, Connection} = anchor.web3
 
 const connection = new Connection("http://localhost:8899", 'singleGossip');
 
@@ -18,6 +17,7 @@ export const initEscrow = async (
     escrowProgramIdString: string
   ) => {
     const provider: any = await init();
+    provider.connection = connection;
     // Configure the client to use the local cluster.
     
     anchor.setProvider(provider)
@@ -50,24 +50,16 @@ export const initEscrow = async (
     
     const escrowAccount = new Account()
 
-  //   const createEscrowAccountIx = SystemProgram.createAccount({
-  //     space: ESCROW_ACCOUNT_DATA_LAYOUT.span,
-  //     lamports: await connection.getMinimumBalanceForRentExemption(ESCROW_ACCOUNT_DATA_LAYOUT.span, 'singleGossip'),
-  //     fromPubkey: initializerAccountPubkey,
-  //     newAccountPubkey: escrowAccount.publicKey,
-  //     programId: escrowProgramId
-  // });
-
     // We also have to add the other two accounts because it turns out when the 
     // system program creates a new account, the tx needs to be signed by that account.
-    // Ans since this does not require the browser wallet interaction, we can send it separately
+    // this is why signers array includes the escrowAccount
     const initEscrowIx = await program.transaction.initEscrow(new anchor.BN(expectedAmount), {
       accounts: {
-        escrowAccount: escrowAccount.publicKey,
+        escrow: escrowAccount.publicKey,
         initializer: initializerAccountPubkey,
         tmpTokenAccount: tempTokenAccount.publicKey,
         tokenToReceiveAccount: new PublicKey(initializerReceivingTokenAccountPubkeyString),
-        rent: SYSVAR_RENT_PUBKEY,
+        // rent: SYSVAR_RENT_PUBKEY,
         tokenProgram: TOKEN_PROGRAM_ID,
         systemProgram: SystemProgram.programId,
       },
@@ -85,16 +77,12 @@ export const initEscrow = async (
       initEscrowIx
     );
 
-    console.log('tempTokenAccount', tempTokenAccount.publicKey.toBase58())
-    console.log('escrowAccount', escrowAccount.publicKey.toBase58())
-
     const {blockhash} = await connection.getRecentBlockhash();
     tx.recentBlockhash = blockhash;
     tx.feePayer = initializerAccountPubkey;
     tx.partialSign(tempTokenAccount, escrowAccount);
     
     const signedTx = await provider.signTransaction(tx);
-    console.log('Serialized: ', signedTx.serialize())
     
     const txHash = await connection.sendRawTransaction(
       signedTx.serialize(),
@@ -105,16 +93,19 @@ export const initEscrow = async (
 
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    const escrowAccountInfo: any = await program.account.escrow.fetch(escrowAccount.publicKey)
-    // const encodedEscrowState = (await connection.getAccountInfo(escrowAccount.publicKey, 'singleGossip'))!.data;
-    // const decodedEscrowState = ESCROW_ACCOUNT_DATA_LAYOUT.decode(encodedEscrowState) as EscrowLayout;
+    let escrowAccountInfo: any;
+    try {
+      escrowAccountInfo = await program.account.escrow.fetch(escrowAccount.publicKey)
+    } catch(error) {
+      console.log((error as any).stack)
+    }
 
     return {
         escrowAccountPubkey: escrowAccount.publicKey.toBase58(),
         isInitialized: !!escrowAccountInfo.isInitialized,
         initializerAccountPubkey: new PublicKey(escrowAccountInfo.initializerPubkey).toBase58(),
-        XTokenTempAccountPubkey: new PublicKey(escrowAccountInfo.initializerTempTokenAccountPubkey).toBase58(),
-        initializerYTokenAccount: new PublicKey(escrowAccountInfo.initializerReceivingTokenAccountPubkey).toBase58(),
-        expectedAmount: new BN(escrowAccountInfo.expectedAmount, 10, "le").toNumber()
+        XTokenTempAccountPubkey: new PublicKey(escrowAccountInfo.tmpTokenAccountPubkey).toBase58(),
+        initializerYTokenAccount: new PublicKey(escrowAccountInfo.initializerTokenToReceiveAccountPubkey).toBase58(),
+        expectedAmount: new anchor.BN(escrowAccountInfo.expectedAmount, 10, "le").toNumber()
     };
 }

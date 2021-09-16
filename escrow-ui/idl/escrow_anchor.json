@@ -6,14 +6,14 @@
       "name": "initEscrow",
       "accounts": [
         {
-          "name": "escrowAccount",
+          "name": "escrow",
           "isMut": true,
           "isSigner": true
         },
         {
           "name": "initializer",
-          "isMut": false,
-          "isSigner": true
+          "isMut": true,
+          "isSigner": false
         },
         {
           "name": "tmpTokenAccount",
@@ -22,11 +22,6 @@
         },
         {
           "name": "tokenToReceiveAccount",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "rent",
           "isMut": false,
           "isSigner": false
         },
@@ -102,6 +97,6 @@
     }
   ],
   "metadata": {
-    "address": "GAMHURm83SzwHkkdMZkYro4FUMj19SoNufVn2v4jXmJ1"
+    "address": "3kyu7viB2VYRVEm2B6xvZy2KvQAC7q9ZpbbzMGjnWJdo"
   }
 }
