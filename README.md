@@ -1,25 +1,24 @@
 Solana Tutorials
 ===
 
-Alice Priv Key  : 5crNqMz4fMFi8yttLLN4hbEFEhDTtGUtHeAhSBUrPkChL9Vt8bcg1tsfshCmNBZiN24xVyzzoeMzfLa69o4rUyma
-Bob Priv Key    : 4aFbPQXtbe39Tr1L3LrYeWVKCor8bUPSzcgSzbxc83tYtuu2LUjemmnB8HETfds6wGAaHUSt5LQuvD1VYUHh7y6b
 
-Example Token (Testnet)
-===
-TOKEN Mint Account           : 3NhqJPvUb8uc76tEM2hpVorg3o7P7sDLAhdboaPrYgZT
-Alice Associated Account     : GWfCLr5qWjKEJtLhN9315i8M9MBEtxWmG44Vn6gUBau
-Bob Associated Account       : 4JEzBoKrhDo1vPEPFagbZ77T4RGgZaV3wPesHzV83VyF
+Alice PubKey    : Dcuqib7GUK8JZYxZNVHqojMxhdCauEp6znq3iKvmxPTn
+Alice Priv Key  : 5crNqMz4fMFi8yttLLN4hbEFEhDTtGUtHeAhSBUrPkChL9Vt8bcg1tsfshCmNBZiN24xVyzzoeMzfLa69o4rUyma
+
+Bob PubKey      : 6PDZBQuDqYmPX7hmYpKbkzu7H6x91Q9WXdJYomTm6C7d
+Bob Priv Key    : 4aFbPQXtbe39Tr1L3LrYeWVKCor8bUPSzcgSzbxc83tYtuu2LUjemmnB8HETfds6wGAaHUSt5LQuvD1VYUHh7y6b
 
 Example Token (localnet)
 ===
-TOKEN A Mint Account                  : 2pEdikNBFaj9NxnrvTGyQDdAMqM54u16pAP8e6HVYJuk
-Alice Associated Account Token A      : Eh8NcUvLbi7Kqj3RvqfLes5rm19AVDwbGbtCVcB29uop
-Bob Associated Account Token A        : v5F5D8VbBvMyKnNKtHBs4foNASmjAyGA45dkJybLyKE
+TOKEN A Mint Account                  : 3vtayExZr4e27aguJgDdtpAHzzGvyecCHYRmpiMoAquG
+Alice Associated Account Token A      : 3UYXaRRYtsJxsG17HUsgm5GfCZwJLiFzwFC6skMZtHty
+Bob Associated Account Token A        : 6WzqmXMXsLfG7D8Qm2w2Fki9qLmvLHjyuVkqFxCeZBjj
 
-TOKEN B Mint Account                  : CwRfHoVF8YsCSk1vfq4rYT2AT9F4SkKFjkKvjfiWq9Ye
-Alice Associated Account Token B      : CJgwHYckhdqqwrKk4wEStMxisgTrF3bEQFQMDFErG6Q2
-Bob Associated Account Token B        : DHB64Si928bNE1kCesjyjgw2MgfnDFwyLtHPYanVv5Kd
+TOKEN B Mint Account                  : 6ayaH1bpnc53XWiwH23hzmE7CeTxE1aCpKEcdtqj5bh9
+Alice Associated Account Token B      : 8FgTqA5QBfGiFdEj5YVWz5yR17hVAP5beAFdDf1wUUa6
+Bob Associated Account Token B        : EYbV6ixaCpjfoB2TNYAA6ZkDxRW8bERA284jQZcd4Dnc
 
 Example Escrow 
 ===
 Escrow Program Id            :GAMHURm83SzwHkkdMZkYro4FUMj19SoNufVn2v4jXmJ1
+

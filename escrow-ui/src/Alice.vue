@@ -76,8 +76,8 @@ export default defineComponent({
   setup() {
     const formState = reactive({
       programId: "GAMHURm83SzwHkkdMZkYro4FUMj19SoNufVn2v4jXmJ1",
-      aliceXTokenAccountPubkey: "Eh8NcUvLbi7Kqj3RvqfLes5rm19AVDwbGbtCVcB29uop",
-      aliceYTokenAccountPubkey: "CJgwHYckhdqqwrKk4wEStMxisgTrF3bEQFQMDFErG6Q2",
+      aliceXTokenAccountPubkey: "3UYXaRRYtsJxsG17HUsgm5GfCZwJLiFzwFC6skMZtHty",
+      aliceYTokenAccountPubkey: "8FgTqA5QBfGiFdEj5YVWz5yR17hVAP5beAFdDf1wUUa6",
       amountXTokensToSendToEscrow: 200,
       amountYTokensAliceExpects: 50
     })

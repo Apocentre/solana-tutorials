@@ -43,9 +43,9 @@ pub mod escrow_anchor {
 
     let (pda, _bump_seed) = Pubkey::find_program_address(&[b"escrow"], ctx.program_id);
     
-    let token_program = accounts.token_program.clone();
+    let token_program = accounts.token_program.to_account_info();
     let cpi_accounts = token::SetAuthority {
-      current_authority: accounts.initializer.clone(),
+      current_authority: accounts.initializer.to_account_info().clone(),
       account_or_mint: accounts.tmp_token_account.clone(),
     };
 
@@ -69,8 +69,8 @@ pub struct InitEscrow<'info> {
   // check here https://docs.solana.com/developing/onchain-programs/overview
   #[account(init, payer = initializer, space = 8 + 105)]
   pub escrow_account: Account<'info, Escrow>,
-  #[account(signer)]
-  pub initializer: AccountInfo<'info>,
+  #[account(mut)]
+  pub initializer: Signer<'info>,
   #[account(mut)]
   pub tmp_token_account: AccountInfo<'info>,
   pub token_to_receive_account: AccountInfo<'info>,
@@ -79,7 +79,7 @@ pub struct InitEscrow<'info> {
 
   // system_program, which is required by the runtime for creating the escrow account
   #[account(address = system_program::ID)]
-  pub system_program: AccountInfo<'info>,
+  pub system_program: Program<'info, System>,
 }
 
 #[account]

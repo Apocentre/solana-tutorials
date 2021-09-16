@@ -10,11 +10,9 @@ name = "escrow_anchor"
 
 [features]
 no-entrypoint = []
-no-idl = []
 cpi = ["no-entrypoint"]
-default = []
 
 [dependencies]
-anchor-lang = "0.15.0"
-anchor-spl = "0.15.0"
+anchor-lang = { git = "https://github.com/project-serum/anchor", branch = "master" }
+anchor-spl = { git = "https://github.com/project-serum/anchor", branch = "master" }
 spl-token = {version = "3.2.0", features = ["no-entrypoint"]}

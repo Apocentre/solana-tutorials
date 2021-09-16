@@ -39,18 +39,24 @@ export const initEscrow = async (
         newAccountPubkey: tempTokenAccount.publicKey
     });
     const initTempAccountIx = Token.createInitAccountInstruction(TOKEN_PROGRAM_ID, XTokenMintAccountPubkey, tempTokenAccount.publicKey, initializerAccountPubkey);
-    const transferXTokensToTempAccIx = Token
-        .createTransferInstruction(TOKEN_PROGRAM_ID, initializerXTokenAccountPubkey, tempTokenAccount.publicKey, initializerAccountPubkey, [], amountXTokensToSendToEscrow);
+    const transferXTokensToTempAccIx = Token.createTransferInstruction(
+      TOKEN_PROGRAM_ID,
+      initializerXTokenAccountPubkey,
+      tempTokenAccount.publicKey,
+      initializerAccountPubkey,
+      [],
+      amountXTokensToSendToEscrow
+    );
     
     const escrowAccount = new Account()
 
-    const createEscrowAccountIx = SystemProgram.createAccount({
-      space: ESCROW_ACCOUNT_DATA_LAYOUT.span,
-      lamports: await connection.getMinimumBalanceForRentExemption(ESCROW_ACCOUNT_DATA_LAYOUT.span, 'singleGossip'),
-      fromPubkey: initializerAccountPubkey,
-      newAccountPubkey: escrowAccount.publicKey,
-      programId: escrowProgramId
-  });
+  //   const createEscrowAccountIx = SystemProgram.createAccount({
+  //     space: ESCROW_ACCOUNT_DATA_LAYOUT.span,
+  //     lamports: await connection.getMinimumBalanceForRentExemption(ESCROW_ACCOUNT_DATA_LAYOUT.span, 'singleGossip'),
+  //     fromPubkey: initializerAccountPubkey,
+  //     newAccountPubkey: escrowAccount.publicKey,
+  //     programId: escrowProgramId
+  // });
 
     // We also have to add the other two accounts because it turns out when the 
     // system program creates a new account, the tx needs to be signed by that account.
